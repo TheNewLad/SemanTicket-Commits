@@ -1,18 +1,57 @@
+import { useTickets } from "./utils/hooks/useTickets.tsx";
+import { useForm } from "react-hook-form";
+
 function App() {
+  const { register, resetField } = useForm();
+  const { tickets, addTickets, removeTicket } = useTickets();
+
+  const handleKeyUp = ({
+    key,
+    currentTarget: { value },
+  }: React.KeyboardEvent<HTMLInputElement>) => {
+    if (key === "Enter") {
+      addTickets(value);
+      resetField("ticket-numbers");
+    }
+  };
+
   return (
     <div className="mx-auto my-0 flex max-w-7xl justify-center p-8 text-black">
       <div className="flex max-w-3xl basis-full flex-col gap-4 bg-slate-600 p-4">
-        <div className="flex">
+        <div className={`flex flex-col ${tickets.length ? "gap-4" : ""}`}>
           <label htmlFor="ticket-numbers" className="sr-only">
             Ticket Numbers
           </label>
           <input
+            {...register("ticket-numbers")}
             type="text"
-            id="ticket-numbers"
             className="basis-full p-2"
             placeholder="Ticket Number (optional): ABC-123, XYZ-789"
+            onKeyUp={(e) => handleKeyUp(e)}
           />
-          <ul></ul>
+          <ul className="flex gap-1">
+            {tickets.map(({ id, title }) => (
+              <li key={id} className="flex gap-0.5 rounded-md bg-slate-400 p-1">
+                <span>{title}</span>
+                <button aria-label="Close" onClick={removeTicket(id)}>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="h-6 w-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                </button>
+              </li>
+            ))}
+          </ul>
         </div>
 
         <div className="flex gap-4">
@@ -52,6 +91,7 @@ function App() {
             id="scope"
             className="basis-10/12 p-2"
             placeholder="Scope"
+            required
           />
         </div>
 
@@ -63,7 +103,7 @@ function App() {
             name="body"
             id="body"
             className="basis-full resize-none p-2"
-            placeholder="Body"
+            placeholder="Body (optional)"
           ></textarea>
         </div>
 
@@ -75,7 +115,7 @@ function App() {
             name="footer"
             id="footer"
             className="basis-full resize-none p-2"
-            placeholder="Footer"
+            placeholder="Footer (optional)"
           ></textarea>
         </div>
       </div>
