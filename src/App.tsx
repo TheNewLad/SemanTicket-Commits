@@ -16,12 +16,12 @@ function App() {
         </div>
 
         <div className="flex gap-4">
+          <label htmlFor="type" className="sr-only" />
           <select
             name="type"
             id="type"
             className="basis-2/12 overflow-hidden p-2"
           >
-            <label htmlFor="type" className="sr-only" />
             <option value="type" disabled selected>
               type
             </option>
