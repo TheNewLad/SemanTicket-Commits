@@ -9,14 +9,14 @@ function App() {
           <input
             type="text"
             id="ticket-numbers"
-            className="basis-full"
+            className="basis-full p-2"
             placeholder="Ticket Number (optional): ABC-123, XYZ-789"
           />
           <ul></ul>
         </div>
 
         <div className="flex gap-4">
-          <select name="type" id="type" className="basis-2/12">
+          <select name="type" id="type" className="basis-2/12 p-2">
             <label htmlFor="type" className="sr-only" />
             <option value="type" disabled selected>
               type
@@ -29,7 +29,7 @@ function App() {
           <input
             type="text"
             id="scope"
-            className="basis-10/12"
+            className="basis-10/12 p-2"
             placeholder="Scope"
           />
         </div>
@@ -41,7 +41,7 @@ function App() {
           <textarea
             name="body"
             id="body"
-            className="basis-full resize-none"
+            className="basis-full resize-none p-2"
             placeholder="Body"
           ></textarea>
         </div>
@@ -53,7 +53,7 @@ function App() {
           <textarea
             name="footer"
             id="footer"
-            className="basis-full resize-none"
+            className="basis-full resize-none p-2"
             placeholder="Footer"
           ></textarea>
         </div>
