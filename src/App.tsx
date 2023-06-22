@@ -16,12 +16,33 @@ function App() {
         </div>
 
         <div className="flex gap-4">
-          <select name="type" id="type" className="basis-2/12 p-2">
+          <select
+            name="type"
+            id="type"
+            className="basis-2/12 overflow-hidden p-2"
+          >
             <label htmlFor="type" className="sr-only" />
             <option value="type" disabled selected>
               type
             </option>
-            <option value="feat">feat</option>
+            <option value="build">
+              build (build system or external dependencies changes)
+            </option>
+            <option value="ci">
+              ci (CI configurations and scripts changes)
+            </option>
+            <option value="docs">docs (documentation)</option>
+            <option value="feat">feat (feature)</option>
+            <option value="fix">fix (bug fix)</option>
+            <option value="perf">perf (improves performance)</option>
+            <option value="refactor">
+              refactor (neither fixes a bug nor adds a feature)
+            </option>
+            <option value="revert">revert (reverts a previous commit)</option>
+            <option value="style">
+              style (formatting, missing semi-colons, etc.)
+            </option>
+            <option value="test">test (adding missing tests)</option>
           </select>
           <label htmlFor="scope" className="sr-only">
             Scope
