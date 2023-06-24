@@ -17,7 +17,7 @@ function App() {
 
   return (
     <div className="mx-auto my-0 flex max-w-7xl justify-center p-8 text-black">
-      <div className="flex max-w-3xl basis-full flex-col gap-4 bg-slate-600 p-4">
+      <div className="flex max-w-full basis-full flex-col gap-4 bg-slate-600 p-4 md:max-w-3xl">
         <div className={`flex flex-col ${tickets.length ? "gap-4" : ""}`}>
           <label htmlFor="ticket-numbers" className="sr-only">
             Ticket Numbers
@@ -54,14 +54,15 @@ function App() {
           </ul>
         </div>
 
-        <div className="flex gap-4">
+        <div className="flex flex-col gap-4 md:flex-row">
           <label htmlFor="type" className="sr-only" />
           <select
             name="type"
             id="type"
-            className="basis-2/12 overflow-hidden p-2"
+            className="basis-2/12 p-2 md:overflow-hidden"
+            defaultValue="type"
           >
-            <option value="type" disabled selected>
+            <option value="type" disabled>
               type
             </option>
             <option value="build">
