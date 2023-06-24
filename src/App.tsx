@@ -143,28 +143,19 @@ function App() {
         </div>
 
         {isValid ? (
-          <div className="flex flex-col bg-blue-200 p-2">
-            <p>Commit Message</p>
-            <div>
-              <p>
-                {`${watch("type")}${
-                  watch("scope") ? `(${watch("scope")})` : ""
-                }:${watch("subject")}`}
-                {/*{watch("body") ? (<br/>{watch("body")}) : ""}*/}
-                {/*  {watch("footer") && (<br/>{watch("footer")})}*/}
-                {watch("body") && (
-                  <>
-                    <br />
-                    {watch("body")}
-                  </>
-                )}
-                {watch("footer") && (
-                  <>
-                    <br />
-                    {watch("footer")}
-                  </>
-                )}
-              </p>
+          <>
+            <hr className="-mx-4 border-t-4" />
+            <div className="flex flex-col gap-3 rounded-lg bg-blue-200 p-4">
+              <p className="text-xl">Commit Message</p>
+              <div id="commit-message" className="rounded-lg bg-white p-4">
+                <p>
+                  {`${watch("type")}${
+                    watch("scope") ? `(${watch("scope")})` : ""
+                  }:${watch("subject")}`}
+                </p>
+                {watch("body") && <p>{watch("body")}</p>}
+                {watch("footer") && <p>{watch("footer")}</p>}
+              </div>
               <button
                 className="inline-flex max-w-fit gap-2 rounded-lg bg-slate-500 p-2"
                 onClick={copyToClipboard}
@@ -173,8 +164,7 @@ function App() {
                 <ClipboardDocumentCheckIcon className="h-6 w-6" />
               </button>
             </div>
-            <button className="inline-flex">Copy to Clipboard</button>
-          </div>
+          </>
         ) : (
           <ErrorMessage subject={watch("subject")} type={watch("type")} />
         )}
