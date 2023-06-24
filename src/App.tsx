@@ -1,13 +1,23 @@
 import { useTickets } from "./utils/hooks/useTickets.tsx";
 import { useForm } from "react-hook-form";
+import { useEffect } from "react";
 import {
+  ExclamationTriangleIcon,
+  InformationCircleIcon,
   XCircleIcon,
 } from "@heroicons/react/24/outline";
+import { ErrorMessage } from "./components/ErrorMessage.tsx";
 
 function App() {
-  const { register, resetField } = useForm();
+  const {
+    register,
+    resetField,
+    watch,
+    formState: { isValid, errors },
+  } = useForm();
   const { tickets, addTickets, removeTicket } = useTickets();
 
+  // TODO: move to useTickets
   const handleKeyUp = ({
     key,
     currentTarget: { value },
@@ -47,12 +57,13 @@ function App() {
         <div className="flex flex-col gap-4 md:flex-row">
           <label htmlFor="type" className="sr-only" />
           <select
+            {...register("type", { required: "Type is required." })}
             name="type"
             id="type"
             className="basis-2/12 p-2 md:overflow-hidden"
-            defaultValue="type"
+            defaultValue=""
           >
-            <option value="type" disabled>
+            <option value="" disabled>
               type
             </option>
             <option value="build">
@@ -78,11 +89,23 @@ function App() {
             Scope
           </label>
           <input
+            {...register("scope")}
             type="text"
             id="scope"
             className="basis-10/12 p-2"
-            placeholder="Scope"
-            required
+            placeholder="Scope (optional): component name, file name, etc."
+          />
+        </div>
+
+        <div className={`gap-4} flex flex-col`}>
+          <label htmlFor="subject" className="sr-only">
+            Subject
+          </label>
+          <input
+            {...register("subject", { required: true })}
+            type="text"
+            className="basis-full p-2"
+            placeholder="Subject: short description of the change"
           />
         </div>
 
@@ -94,7 +117,7 @@ function App() {
             name="body"
             id="body"
             className="basis-full resize-none p-2"
-            placeholder="Body (optional)"
+            placeholder="Body (optional): longer description of the change"
           ></textarea>
         </div>
 
@@ -106,9 +129,13 @@ function App() {
             name="footer"
             id="footer"
             className="basis-full resize-none p-2"
-            placeholder="Footer (optional)"
+            placeholder="Footer (optional): breaking changes, closed issues, etc."
           ></textarea>
         </div>
+
+        {!isValid && (
+          <ErrorMessage subject={watch("subject")} type={watch("type")} />
+        )}
       </div>
     </div>
   );
