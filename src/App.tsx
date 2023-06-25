@@ -8,6 +8,7 @@ import {
   XCircleIcon,
 } from "@heroicons/react/24/outline";
 import { ErrorMessage } from "./components/ErrorMessage.tsx";
+import { formatTickets } from "./utils/formatTickets.ts";
 
 function App() {
   const {
@@ -37,7 +38,7 @@ function App() {
 
   return (
     <div className="mx-auto my-0 flex max-w-7xl justify-center p-8 text-black">
-      <div className="flex max-w-full basis-full flex-col gap-4 bg-slate-600 p-4 md:max-w-3xl">
+      <div className="flex max-w-full basis-full flex-col gap-4 rounded-md bg-slate-600 p-4 md:max-w-3xl">
         <div className={`flex flex-col ${tickets.length ? "gap-4" : ""}`}>
           <label htmlFor="ticket-numbers" className="sr-only">
             Ticket Numbers
@@ -45,7 +46,7 @@ function App() {
           <input
             {...register("ticket-numbers")}
             type="text"
-            className="basis-full p-2"
+            className="basis-full rounded-md p-2"
             placeholder="Ticket Number (optional): ABC-123, XYZ-789"
             onKeyUp={(e) => handleKeyUp(e)}
           />
@@ -67,7 +68,7 @@ function App() {
             {...register("type", { required: "Type is required." })}
             name="type"
             id="type"
-            className="basis-2/12 p-2 md:overflow-hidden"
+            className="basis-2/12 rounded-md p-2 md:overflow-hidden"
             defaultValue=""
           >
             <option value="" disabled>
@@ -99,7 +100,7 @@ function App() {
             {...register("scope")}
             type="text"
             id="scope"
-            className="basis-10/12 p-2"
+            className="basis-10/12 rounded-md p-2"
             placeholder="Scope (optional): component name, file name, etc."
           />
         </div>
@@ -111,7 +112,7 @@ function App() {
           <input
             {...register("subject", { required: true })}
             type="text"
-            className="basis-full p-2"
+            className="basis-full rounded-md p-2"
             placeholder="Subject: short description of the change"
           />
         </div>
@@ -124,7 +125,7 @@ function App() {
             {...register("body")}
             name="body"
             id="body"
-            className="basis-full resize-none p-2"
+            className="basis-full resize-none rounded-md p-2"
             placeholder="Body (optional): longer description of the change"
           ></textarea>
         </div>
@@ -137,7 +138,7 @@ function App() {
             {...register("footer")}
             name="footer"
             id="footer"
-            className="basis-full resize-none p-2"
+            className="basis-full resize-none rounded-md p-2"
             placeholder="Footer (optional): breaking changes, closed issues, etc."
           ></textarea>
         </div>
@@ -151,7 +152,9 @@ function App() {
                 <p>
                   {`${watch("type")}${
                     watch("scope") ? `(${watch("scope")})` : ""
-                  }:${watch("subject")}`}
+                  }: ${watch("subject")}${
+                    tickets.length ? ` ${formatTickets(tickets)}` : ""
+                  }`}
                 </p>
                 {watch("body") && <p>{watch("body")}</p>}
                 {watch("footer") && <p>{watch("footer")}</p>}
