@@ -142,7 +142,7 @@ function App() {
         {isValid ? (
           <div className="flex flex-col bg-blue-200 p-2">
             <p>Commit Message</p>
-            <div>
+            <div id="commit-message">
               <p>
                 {`${watch("type")}${
                   watch("scope") ? `(${watch("scope")})` : ""
@@ -160,15 +160,14 @@ function App() {
                   </>
                 )}
               </p>
-              <button
-                className="inline-flex max-w-fit gap-2 rounded-lg bg-slate-500 p-2"
-                onClick={copyToClipboard}
-              >
-                <p>Copy to Clipboard</p>
-                <ClipboardDocumentCheckIcon className="h-6 w-6" />
-              </button>
             </div>
-            <button className="inline-flex">Copy to Clipboard</button>
+            <button
+              className="inline-flex max-w-fit gap-2 rounded-lg bg-slate-500 p-2"
+              onClick={copyToClipboard}
+            >
+              <p>Copy to Clipboard</p>
+              <ClipboardDocumentCheckIcon className="h-6 w-6" />
+            </button>
           </div>
         ) : (
           <ErrorMessage subject={watch("subject")} type={watch("type")} />
