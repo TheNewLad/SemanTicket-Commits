@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-interface Ticket {
+export interface Ticket {
   id: string;
   title: string;
 }

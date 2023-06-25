@@ -5,6 +5,7 @@ import {
   XCircleIcon,
 } from "@heroicons/react/24/outline";
 import { ErrorMessage } from "./components/ErrorMessage.tsx";
+import { formatTickets } from "./utils/formatTickets.ts";
 
 function App() {
   const {
@@ -34,7 +35,7 @@ function App() {
 
   return (
     <div className="mx-auto my-0 flex max-w-7xl justify-center p-8 text-black">
-      <div className="flex max-w-full basis-full flex-col gap-4 bg-slate-600 p-4 md:max-w-3xl">
+      <div className="flex max-w-full basis-full flex-col gap-4 rounded-md border-2 border-gray-200 p-4 md:max-w-3xl">
         <div className={`flex flex-col ${tickets.length ? "gap-4" : ""}`}>
           <label htmlFor="ticket-numbers" className="sr-only">
             Ticket Numbers
@@ -42,15 +43,19 @@ function App() {
           <input
             {...register("ticket-numbers")}
             type="text"
-            className="basis-full p-2"
+            className="basis-full rounded-md border-2 border-gray-200 bg-transparent p-2 text-gray-200 transition hover:border-blue-200 focus:bg-gray-200 focus:text-black"
             placeholder="Ticket Number (optional): ABC-123, XYZ-789"
             onKeyUp={(e) => handleKeyUp(e)}
           />
-          <ul className="flex gap-1">
+          <ul className="flex flex-wrap gap-1">
             {tickets.map(({ id, title }) => (
-              <li key={id} className="flex gap-0.5 rounded-md bg-slate-400 p-1">
-                <span>{title}</span>
-                <button aria-label="Close" onClick={removeTicket(id)}>
+              <li key={id} className="flex gap-2">
+                <button
+                  aria-label="Close"
+                  onClick={removeTicket(id)}
+                  className="inline-flex gap-0.5 rounded-md border-2 border-blue-200 p-1 text-blue-200 transition hover:border-red-300 hover:text-red-300"
+                >
+                  <span>{title}</span>
                   <XCircleIcon className="h-6 w-6" />
                 </button>
               </li>
@@ -64,7 +69,7 @@ function App() {
             {...register("type", { required: "Type is required." })}
             name="type"
             id="type"
-            className="basis-2/12 p-2 md:overflow-hidden"
+            className="basis-2/12 rounded-md border-2 border-gray-200 bg-transparent p-2 text-gray-200 transition hover:border-blue-200 focus:bg-gray-200 focus:text-black md:overflow-hidden"
             defaultValue=""
           >
             <option value="" disabled>
@@ -96,7 +101,7 @@ function App() {
             {...register("scope")}
             type="text"
             id="scope"
-            className="basis-10/12 p-2"
+            className="basis-10/12 rounded-md border-2 border-gray-200 bg-transparent p-2 text-gray-200 transition hover:border-blue-200 focus:bg-gray-200 focus:text-black"
             placeholder="Scope (optional): component name, file name, etc."
           />
         </div>
@@ -108,7 +113,7 @@ function App() {
           <input
             {...register("subject", { required: true })}
             type="text"
-            className="basis-full p-2"
+            className="basis-full rounded-md border-2 border-gray-200 bg-transparent p-2 text-gray-200 transition hover:border-blue-200 focus:bg-gray-200 focus:text-black"
             placeholder="Subject: short description of the change"
           />
         </div>
@@ -121,7 +126,7 @@ function App() {
             {...register("body")}
             name="body"
             id="body"
-            className="basis-full resize-none p-2"
+            className="basis-full resize-none rounded-md border-2 border-gray-200 bg-transparent p-2 text-gray-200 transition hover:border-blue-200 focus:bg-gray-200 focus:text-black"
             placeholder="Body (optional): longer description of the change"
           ></textarea>
         </div>
@@ -134,41 +139,38 @@ function App() {
             {...register("footer")}
             name="footer"
             id="footer"
-            className="basis-full resize-none p-2"
+            className="basis-full resize-none rounded-md border-2 border-gray-200 bg-transparent p-2 text-gray-200 transition hover:border-blue-200 focus:bg-gray-200 focus:text-black"
             placeholder="Footer (optional): breaking changes, closed issues, etc."
           ></textarea>
         </div>
 
         {isValid ? (
-          <div className="flex flex-col bg-blue-200 p-2">
-            <p>Commit Message</p>
-            <div id="commit-message">
-              <p>
-                {`${watch("type")}${
-                  watch("scope") ? `(${watch("scope")})` : ""
-                }:${watch("subject")}`}
-                {watch("body") && (
-                  <>
-                    <br />
-                    {watch("body")}
-                  </>
-                )}
-                {watch("footer") && (
-                  <>
-                    <br />
-                    {watch("footer")}
-                  </>
-                )}
-              </p>
+          <>
+            <div className="flex flex-col items-center gap-3 rounded-lg border-2 border-blue-200 p-4 sm:items-start">
+              <p className="text-xl text-blue-200">Commit Message</p>
+              <div
+                id="commit-message"
+                className="w-full rounded-lg border-2 border-blue-200 p-4 text-blue-200"
+              >
+                <p>
+                  {`${watch("type")}${
+                    watch("scope") ? `(${watch("scope")})` : ""
+                  }: ${watch("subject")}${
+                    tickets.length ? ` ${formatTickets(tickets)}` : ""
+                  }`}
+                </p>
+                {watch("body") && <p>{watch("body")}</p>}
+                {watch("footer") && <p>{watch("footer")}</p>}
+              </div>
+              <button
+                className="inline-flex max-w-fit gap-2 rounded-lg border-2 border-blue-200 p-2 text-blue-200 transition hover:border-green-200 hover:text-green-200"
+                onClick={copyToClipboard}
+              >
+                <p>Copy to Clipboard</p>
+                <ClipboardDocumentCheckIcon className="h-6 w-6" />
+              </button>
             </div>
-            <button
-              className="inline-flex max-w-fit gap-2 rounded-lg bg-slate-500 p-2"
-              onClick={copyToClipboard}
-            >
-              <p>Copy to Clipboard</p>
-              <ClipboardDocumentCheckIcon className="h-6 w-6" />
-            </button>
-          </div>
+          </>
         ) : (
           <ErrorMessage subject={watch("subject")} type={watch("type")} />
         )}
