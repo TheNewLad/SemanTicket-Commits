@@ -1,10 +1,7 @@
 import { useTickets } from "./utils/hooks/useTickets.tsx";
 import { useForm } from "react-hook-form";
-import { useEffect } from "react";
 import {
   ClipboardDocumentCheckIcon,
-  ExclamationTriangleIcon,
-  InformationCircleIcon,
   XCircleIcon,
 } from "@heroicons/react/24/outline";
 import { ErrorMessage } from "./components/ErrorMessage.tsx";
@@ -14,7 +11,7 @@ function App() {
     register,
     resetField,
     watch,
-    formState: { isValid, errors },
+    formState: { isValid },
   } = useForm();
   const { tickets, addTickets, removeTicket } = useTickets();
 
@@ -150,8 +147,6 @@ function App() {
                 {`${watch("type")}${
                   watch("scope") ? `(${watch("scope")})` : ""
                 }:${watch("subject")}`}
-                {/*{watch("body") ? (<br/>{watch("body")}) : ""}*/}
-                {/*  {watch("footer") && (<br/>{watch("footer")})}*/}
                 {watch("body") && (
                   <>
                     <br />
