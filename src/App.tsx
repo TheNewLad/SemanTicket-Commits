@@ -142,10 +142,12 @@ function App() {
 
         {isValid ? (
           <>
-            <hr className="-mx-4 border-t-4 border-[#242424]" />
-            <div className="flex flex-col gap-3 rounded-lg bg-blue-200 p-4">
-              <p className="text-xl">Commit Message</p>
-              <div id="commit-message" className="rounded-lg bg-white p-4">
+            <div className="flex flex-col gap-3 rounded-lg border-2 border-blue-200 p-4">
+              <p className="text-xl text-blue-200">Commit Message</p>
+              <div
+                id="commit-message"
+                className="rounded-lg border-2 border-blue-200 p-4 text-blue-200"
+              >
                 <p>
                   {`${watch("type")}${
                     watch("scope") ? `(${watch("scope")})` : ""
@@ -157,7 +159,7 @@ function App() {
                 {watch("footer") && <p>{watch("footer")}</p>}
               </div>
               <button
-                className="inline-flex max-w-fit gap-2 rounded-lg bg-slate-400 p-2"
+                className="inline-flex max-w-fit gap-2 rounded-lg border-2 border-blue-200 p-2 text-blue-200 transition hover:bg-blue-200 hover:text-blue-900"
                 onClick={copyToClipboard}
               >
                 <p>Copy to Clipboard</p>
