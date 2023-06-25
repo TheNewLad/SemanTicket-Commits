@@ -146,11 +146,11 @@ function App() {
 
         {isValid ? (
           <>
-            <div className="flex flex-col gap-3 rounded-lg border-2 border-blue-200 p-4">
+            <div className="flex flex-col items-center gap-3 rounded-lg border-2 border-blue-200 p-4 sm:items-start">
               <p className="text-xl text-blue-200">Commit Message</p>
               <div
                 id="commit-message"
-                className="rounded-lg border-2 border-blue-200 p-4 text-blue-200"
+                className="w-full rounded-lg border-2 border-blue-200 p-4 text-blue-200"
               >
                 <p>
                   {`${watch("type")}${
