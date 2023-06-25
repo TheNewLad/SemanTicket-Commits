@@ -35,7 +35,7 @@ function App() {
 
   return (
     <div className="mx-auto my-0 flex max-w-7xl justify-center p-8 text-black">
-      <div className="flex max-w-full basis-full flex-col gap-4 rounded-md bg-slate-600 p-4 md:max-w-3xl">
+      <div className="flex max-w-full basis-full flex-col gap-4 rounded-md border-2 border-gray-200 p-4 md:max-w-3xl">
         <div className={`flex flex-col ${tickets.length ? "gap-4" : ""}`}>
           <label htmlFor="ticket-numbers" className="sr-only">
             Ticket Numbers
@@ -43,7 +43,7 @@ function App() {
           <input
             {...register("ticket-numbers")}
             type="text"
-            className="basis-full rounded-md p-2"
+            className="basis-full rounded-md border-2 border-gray-200 bg-transparent p-2 text-gray-200"
             placeholder="Ticket Number (optional): ABC-123, XYZ-789"
             onKeyUp={(e) => handleKeyUp(e)}
           />
@@ -65,7 +65,7 @@ function App() {
             {...register("type", { required: "Type is required." })}
             name="type"
             id="type"
-            className="basis-2/12 rounded-md p-2 md:overflow-hidden"
+            className="basis-2/12 rounded-md border-2 border-gray-200 bg-transparent p-2 text-gray-200 md:overflow-hidden"
             defaultValue=""
           >
             <option value="" disabled>
@@ -97,7 +97,7 @@ function App() {
             {...register("scope")}
             type="text"
             id="scope"
-            className="basis-10/12 rounded-md p-2"
+            className="basis-10/12 rounded-md border-2 border-gray-200 bg-transparent p-2 text-gray-200"
             placeholder="Scope (optional): component name, file name, etc."
           />
         </div>
@@ -109,7 +109,7 @@ function App() {
           <input
             {...register("subject", { required: true })}
             type="text"
-            className="basis-full rounded-md p-2"
+            className="basis-full rounded-md border-2 border-gray-200 bg-transparent p-2 text-gray-200"
             placeholder="Subject: short description of the change"
           />
         </div>
@@ -122,7 +122,7 @@ function App() {
             {...register("body")}
             name="body"
             id="body"
-            className="basis-full resize-none rounded-md p-2"
+            className="basis-full resize-none rounded-md border-2 border-gray-200 bg-transparent p-2 text-gray-200"
             placeholder="Body (optional): longer description of the change"
           ></textarea>
         </div>
@@ -135,7 +135,7 @@ function App() {
             {...register("footer")}
             name="footer"
             id="footer"
-            className="basis-full resize-none rounded-md p-2"
+            className="basis-full resize-none rounded-md border-2 border-gray-200 bg-transparent p-2 text-gray-200"
             placeholder="Footer (optional): breaking changes, closed issues, etc."
           ></textarea>
         </div>
