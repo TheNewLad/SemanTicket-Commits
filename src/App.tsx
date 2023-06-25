@@ -49,9 +49,13 @@ function App() {
           />
           <ul className="flex flex-wrap gap-1">
             {tickets.map(({ id, title }) => (
-              <li key={id} className="flex gap-0.5 rounded-md bg-slate-400 p-1">
-                <span>{title}</span>
-                <button aria-label="Close" onClick={removeTicket(id)}>
+              <li key={id} className="flex gap-2">
+                <button
+                  aria-label="Close"
+                  onClick={removeTicket(id)}
+                  className="inline-flex gap-0.5 rounded-md border-2 border-blue-200 p-1 text-blue-200 transition hover:border-red-300 hover:text-red-300"
+                >
+                  <span>{title}</span>
                   <XCircleIcon className="h-6 w-6" />
                 </button>
               </li>
@@ -159,7 +163,7 @@ function App() {
                 {watch("footer") && <p>{watch("footer")}</p>}
               </div>
               <button
-                className="inline-flex max-w-fit gap-2 rounded-lg border-2 border-blue-200 p-2 text-blue-200 transition hover:bg-blue-200 hover:text-blue-900"
+                className="inline-flex max-w-fit gap-2 rounded-lg border-2 border-blue-200 p-2 text-blue-200 transition hover:border-green-200 hover:text-green-200"
                 onClick={copyToClipboard}
               >
                 <p>Copy to Clipboard</p>
