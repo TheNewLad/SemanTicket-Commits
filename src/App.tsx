@@ -1,10 +1,18 @@
 import { useTickets } from "./utils/hooks/useTickets.tsx";
 import { useForm } from "react-hook-form";
+import { XCircleIcon } from "@heroicons/react/24/outline";
+import { ErrorMessage } from "./components/ErrorMessage.tsx";
 
 function App() {
-  const { register, resetField } = useForm();
+  const {
+    register,
+    resetField,
+    watch,
+    formState: { isValid },
+  } = useForm();
   const { tickets, addTickets, removeTicket } = useTickets();
 
+  // TODO: move to useTickets
   const handleKeyUp = ({
     key,
     currentTarget: { value },
@@ -34,20 +42,7 @@ function App() {
               <li key={id} className="flex gap-0.5 rounded-md bg-slate-400 p-1">
                 <span>{title}</span>
                 <button aria-label="Close" onClick={removeTicket(id)}>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="h-6 w-6"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
+                  <XCircleIcon className="h-6 w-6" />
                 </button>
               </li>
             ))}
@@ -57,12 +52,13 @@ function App() {
         <div className="flex flex-col gap-4 md:flex-row">
           <label htmlFor="type" className="sr-only" />
           <select
+            {...register("type", { required: "Type is required." })}
             name="type"
             id="type"
             className="basis-2/12 p-2 md:overflow-hidden"
-            defaultValue="type"
+            defaultValue=""
           >
-            <option value="type" disabled>
+            <option value="" disabled>
               type
             </option>
             <option value="build">
@@ -88,11 +84,23 @@ function App() {
             Scope
           </label>
           <input
+            {...register("scope")}
             type="text"
             id="scope"
             className="basis-10/12 p-2"
-            placeholder="Scope"
-            required
+            placeholder="Scope (optional): component name, file name, etc."
+          />
+        </div>
+
+        <div className={`gap-4} flex flex-col`}>
+          <label htmlFor="subject" className="sr-only">
+            Subject
+          </label>
+          <input
+            {...register("subject", { required: true })}
+            type="text"
+            className="basis-full p-2"
+            placeholder="Subject: short description of the change"
           />
         </div>
 
@@ -104,7 +112,7 @@ function App() {
             name="body"
             id="body"
             className="basis-full resize-none p-2"
-            placeholder="Body (optional)"
+            placeholder="Body (optional): longer description of the change"
           ></textarea>
         </div>
 
@@ -116,9 +124,13 @@ function App() {
             name="footer"
             id="footer"
             className="basis-full resize-none p-2"
-            placeholder="Footer (optional)"
+            placeholder="Footer (optional): breaking changes, closed issues, etc."
           ></textarea>
         </div>
+
+        {!isValid && (
+          <ErrorMessage subject={watch("subject")} type={watch("type")} />
+        )}
       </div>
     </div>
   );
