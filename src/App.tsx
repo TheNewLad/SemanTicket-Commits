@@ -1,6 +1,9 @@
 import { useTickets } from "./utils/hooks/useTickets.tsx";
 import { useForm } from "react-hook-form";
-import { XCircleIcon } from "@heroicons/react/24/outline";
+import {
+  ClipboardDocumentCheckIcon,
+  XCircleIcon,
+} from "@heroicons/react/24/outline";
 import { ErrorMessage } from "./components/ErrorMessage.tsx";
 
 function App() {
@@ -21,6 +24,12 @@ function App() {
       addTickets(value);
       resetField("ticket-numbers");
     }
+  };
+
+  const copyToClipboard = () => {
+    const commitMessage = document.getElementById("commit-message")?.innerText;
+    if (!commitMessage) return;
+    navigator.clipboard.writeText(commitMessage);
   };
 
   return (
@@ -109,6 +118,7 @@ function App() {
             Body
           </label>
           <textarea
+            {...register("body")}
             name="body"
             id="body"
             className="basis-full resize-none p-2"
@@ -121,6 +131,7 @@ function App() {
             Footer
           </label>
           <textarea
+            {...register("footer")}
             name="footer"
             id="footer"
             className="basis-full resize-none p-2"
@@ -128,7 +139,37 @@ function App() {
           ></textarea>
         </div>
 
-        {!isValid && (
+        {isValid ? (
+          <div className="flex flex-col bg-blue-200 p-2">
+            <p>Commit Message</p>
+            <div id="commit-message">
+              <p>
+                {`${watch("type")}${
+                  watch("scope") ? `(${watch("scope")})` : ""
+                }:${watch("subject")}`}
+                {watch("body") && (
+                  <>
+                    <br />
+                    {watch("body")}
+                  </>
+                )}
+                {watch("footer") && (
+                  <>
+                    <br />
+                    {watch("footer")}
+                  </>
+                )}
+              </p>
+            </div>
+            <button
+              className="inline-flex max-w-fit gap-2 rounded-lg bg-slate-500 p-2"
+              onClick={copyToClipboard}
+            >
+              <p>Copy to Clipboard</p>
+              <ClipboardDocumentCheckIcon className="h-6 w-6" />
+            </button>
+          </div>
+        ) : (
           <ErrorMessage subject={watch("subject")} type={watch("type")} />
         )}
       </div>
