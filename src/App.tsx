@@ -1,11 +1,6 @@
 import { useTickets } from "./utils/hooks/useTickets.tsx";
 import { useForm } from "react-hook-form";
-import { useEffect } from "react";
-import {
-  ExclamationTriangleIcon,
-  InformationCircleIcon,
-  XCircleIcon,
-} from "@heroicons/react/24/outline";
+import { XCircleIcon } from "@heroicons/react/24/outline";
 import { ErrorMessage } from "./components/ErrorMessage.tsx";
 
 function App() {
@@ -13,7 +8,7 @@ function App() {
     register,
     resetField,
     watch,
-    formState: { isValid, errors },
+    formState: { isValid },
   } = useForm();
   const { tickets, addTickets, removeTicket } = useTickets();
 
