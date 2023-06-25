@@ -43,7 +43,7 @@ function App() {
           <input
             {...register("ticket-numbers")}
             type="text"
-            className="basis-full rounded-md border-2 border-gray-200 bg-transparent p-2 text-gray-200 hover:border-blue-200 focus:bg-gray-200 focus:text-black"
+            className="basis-full rounded-md border-2 border-gray-200 bg-transparent p-2 text-gray-200 transition hover:border-blue-200 focus:bg-gray-200 focus:text-black"
             placeholder="Ticket Number (optional): ABC-123, XYZ-789"
             onKeyUp={(e) => handleKeyUp(e)}
           />
@@ -65,7 +65,7 @@ function App() {
             {...register("type", { required: "Type is required." })}
             name="type"
             id="type"
-            className="basis-2/12 rounded-md border-2 border-gray-200 bg-transparent p-2 text-gray-200 hover:border-blue-200 focus:bg-gray-200 focus:text-black md:overflow-hidden"
+            className="basis-2/12 rounded-md border-2 border-gray-200 bg-transparent p-2 text-gray-200 transition hover:border-blue-200 focus:bg-gray-200 focus:text-black md:overflow-hidden"
             defaultValue=""
           >
             <option value="" disabled>
@@ -97,7 +97,7 @@ function App() {
             {...register("scope")}
             type="text"
             id="scope"
-            className="basis-10/12 rounded-md border-2 border-gray-200 bg-transparent p-2 text-gray-200 hover:border-blue-200 focus:bg-gray-200 focus:text-black"
+            className="basis-10/12 rounded-md border-2 border-gray-200 bg-transparent p-2 text-gray-200 transition hover:border-blue-200 focus:bg-gray-200 focus:text-black"
             placeholder="Scope (optional): component name, file name, etc."
           />
         </div>
@@ -109,7 +109,7 @@ function App() {
           <input
             {...register("subject", { required: true })}
             type="text"
-            className="basis-full rounded-md border-2 border-gray-200 bg-transparent p-2 text-gray-200 hover:border-blue-200 focus:bg-gray-200 focus:text-black"
+            className="basis-full rounded-md border-2 border-gray-200 bg-transparent p-2 text-gray-200 transition hover:border-blue-200 focus:bg-gray-200 focus:text-black"
             placeholder="Subject: short description of the change"
           />
         </div>
@@ -122,7 +122,7 @@ function App() {
             {...register("body")}
             name="body"
             id="body"
-            className="basis-full resize-none rounded-md border-2 border-gray-200 bg-transparent p-2 text-gray-200 hover:border-blue-200 focus:bg-gray-200 focus:text-black"
+            className="basis-full resize-none rounded-md border-2 border-gray-200 bg-transparent p-2 text-gray-200 transition hover:border-blue-200 focus:bg-gray-200 focus:text-black"
             placeholder="Body (optional): longer description of the change"
           ></textarea>
         </div>
@@ -135,7 +135,7 @@ function App() {
             {...register("footer")}
             name="footer"
             id="footer"
-            className="basis-full resize-none rounded-md border-2 border-gray-200 bg-transparent p-2 text-gray-200 hover:border-blue-200 focus:bg-gray-200 focus:text-black"
+            className="basis-full resize-none rounded-md border-2 border-gray-200 bg-transparent p-2 text-gray-200 transition hover:border-blue-200 focus:bg-gray-200 focus:text-black"
             placeholder="Footer (optional): breaking changes, closed issues, etc."
           ></textarea>
         </div>
