@@ -1,10 +1,7 @@
 import { useTickets } from "./utils/hooks/useTickets.tsx";
 import { useForm } from "react-hook-form";
-import { useEffect } from "react";
 import {
   ClipboardDocumentCheckIcon,
-  ExclamationTriangleIcon,
-  InformationCircleIcon,
   XCircleIcon,
 } from "@heroicons/react/24/outline";
 import { ErrorMessage } from "./components/ErrorMessage.tsx";
@@ -15,7 +12,7 @@ function App() {
     register,
     resetField,
     watch,
-    formState: { isValid, errors },
+    formState: { isValid },
   } = useForm();
   const { tickets, addTickets, removeTicket } = useTickets();
 
@@ -50,7 +47,7 @@ function App() {
             placeholder="Ticket Number (optional): ABC-123, XYZ-789"
             onKeyUp={(e) => handleKeyUp(e)}
           />
-          <ul className="flex gap-1">
+          <ul className="flex flex-wrap gap-1">
             {tickets.map(({ id, title }) => (
               <li key={id} className="flex gap-0.5 rounded-md bg-slate-400 p-1">
                 <span>{title}</span>
@@ -145,7 +142,7 @@ function App() {
 
         {isValid ? (
           <>
-            <hr className="-mx-4 border-t-4" />
+            <hr className="-mx-4 border-t-4 border-[#242424]" />
             <div className="flex flex-col gap-3 rounded-lg bg-blue-200 p-4">
               <p className="text-xl">Commit Message</p>
               <div id="commit-message" className="rounded-lg bg-white p-4">
@@ -160,7 +157,7 @@ function App() {
                 {watch("footer") && <p>{watch("footer")}</p>}
               </div>
               <button
-                className="inline-flex max-w-fit gap-2 rounded-lg bg-slate-500 p-2"
+                className="inline-flex max-w-fit gap-2 rounded-lg bg-slate-400 p-2"
                 onClick={copyToClipboard}
               >
                 <p>Copy to Clipboard</p>
