@@ -36,33 +36,6 @@ function App() {
   return (
     <div className="mx-auto my-0 flex max-w-7xl justify-center p-8 text-black">
       <div className="flex max-w-full basis-full flex-col gap-4 rounded-md border-2 border-gray-200 p-4 md:max-w-3xl">
-        <div className={`flex flex-col ${tickets.length ? "gap-4" : ""}`}>
-          <label htmlFor="ticket-numbers" className="sr-only">
-            Ticket Numbers
-          </label>
-          <input
-            {...register("ticket-numbers")}
-            type="text"
-            className="basis-full rounded-md border-2 border-gray-200 bg-transparent p-2 text-gray-200 transition hover:border-blue-200 focus:bg-gray-200 focus:text-black"
-            placeholder="Ticket Number (optional): ABC-123, XYZ-789"
-            onKeyUp={(e) => handleKeyUp(e)}
-          />
-          <ul className="flex flex-wrap gap-1">
-            {tickets.map(({ id, title }) => (
-              <li key={id} className="flex gap-2">
-                <button
-                  aria-label="Close"
-                  onClick={removeTicket(id)}
-                  className="inline-flex gap-0.5 rounded-md border-2 border-blue-200 p-1 text-blue-200 transition hover:border-red-300 hover:text-red-300"
-                >
-                  <span>{title}</span>
-                  <XCircleIcon className="h-6 w-6" />
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
-
         <div className="flex flex-col gap-4 md:flex-row">
           <label htmlFor="type" className="sr-only" />
           <select
@@ -116,6 +89,33 @@ function App() {
             className="basis-full rounded-md border-2 border-gray-200 bg-transparent p-2 text-gray-200 transition hover:border-blue-200 focus:bg-gray-200 focus:text-black"
             placeholder="Subject: short description of the change"
           />
+        </div>
+
+        <div className={`flex flex-col ${tickets.length ? "gap-4" : ""}`}>
+          <label htmlFor="ticket-numbers" className="sr-only">
+            Ticket Numbers
+          </label>
+          <input
+            {...register("ticket-numbers")}
+            type="text"
+            className="basis-full rounded-md border-2 border-gray-200 bg-transparent p-2 text-gray-200 transition hover:border-blue-200 focus:bg-gray-200 focus:text-black"
+            placeholder="Ticket Number (optional): ABC-123, XYZ-789"
+            onKeyUp={(e) => handleKeyUp(e)}
+          />
+          <ul className="flex flex-wrap gap-1">
+            {tickets.map(({ id, title }) => (
+              <li key={id} className="flex gap-2">
+                <button
+                  aria-label="Close"
+                  onClick={removeTicket(id)}
+                  className="inline-flex gap-0.5 rounded-md border-2 border-blue-200 p-1 text-blue-200 transition hover:border-red-300 hover:text-red-300"
+                >
+                  <span>{title}</span>
+                  <XCircleIcon className="h-6 w-6" />
+                </button>
+              </li>
+            ))}
+          </ul>
         </div>
 
         <div className="flex">
