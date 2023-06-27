@@ -19,26 +19,28 @@ function App() {
   } = useForm();
   const { tickets, addTickets, removeTicket } = useTickets();
 
-  // TODO: move to useTickets
+  const processTickets = (value: string) =>
+    addTickets(
+      value,
+      () => {
+        trigger("ticketNumberError").then(() => {
+          setError("ticketNumberError", {
+            type: "custom",
+          });
+        });
+      },
+      () => {
+        clearErrors("ticketNumberError");
+        resetField("ticket-numbers");
+      }
+    );
+
   const handleKeyUp = ({
     key,
     currentTarget: { value },
   }: React.KeyboardEvent<HTMLInputElement>) => {
     if (key === "Enter") {
-      addTickets(
-        value,
-        () => {
-          setError("ticketNumberError", {
-            type: "custom",
-            message: "custom message",
-          });
-          trigger("ticketNumberError");
-        },
-        () => {
-          clearErrors("ticketNumberError");
-          resetField("ticket-numbers");
-        }
-      );
+      processTickets(value);
     }
   };
 
