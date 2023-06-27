@@ -12,7 +12,10 @@ function App() {
     register,
     resetField,
     watch,
-    formState: { isValid },
+    formState: { isValid, errors },
+    setError,
+    clearErrors,
+    trigger,
   } = useForm();
   const { tickets, addTickets, removeTicket } = useTickets();
 
@@ -22,8 +25,20 @@ function App() {
     currentTarget: { value },
   }: React.KeyboardEvent<HTMLInputElement>) => {
     if (key === "Enter") {
-      addTickets(value);
-      resetField("ticket-numbers");
+      addTickets(
+        value,
+        () => {
+          setError("ticketNumberError", {
+            type: "custom",
+            message: "custom message",
+          });
+          trigger("ticketNumberError");
+        },
+        () => {
+          clearErrors("ticketNumberError");
+          resetField("ticket-numbers");
+        }
+      );
     }
   };
 
@@ -42,7 +57,7 @@ function App() {
             {...register("type", { required: "Type is required." })}
             name="type"
             id="type"
-            className="basis-2/12 rounded-md border-2 border-gray-200 bg-transparent p-2 text-gray-200 transition hover:border-blue-200 focus:bg-gray-200 focus:text-black md:overflow-hidden"
+            className="basis-2/12 rounded-md border-2 border-gray-200 bg-transparent p-2 text-gray-200 transition hover:border-blue-200 focus:bg-gray-200 focus:text-black focus:outline-none md:overflow-hidden"
             defaultValue=""
           >
             <option value="" disabled>
@@ -74,7 +89,7 @@ function App() {
             {...register("scope")}
             type="text"
             id="scope"
-            className="basis-10/12 rounded-md border-2 border-gray-200 bg-transparent p-2 text-gray-200 transition hover:border-blue-200 focus:bg-gray-200 focus:text-black"
+            className="basis-10/12 rounded-md border-2 border-gray-200 bg-transparent p-2 text-gray-200 transition hover:border-blue-200 focus:bg-gray-200 focus:text-black focus:outline-none"
             placeholder="Scope (optional): component name, file name, etc."
           />
         </div>
@@ -86,7 +101,7 @@ function App() {
           <input
             {...register("subject", { required: true })}
             type="text"
-            className="basis-full rounded-md border-2 border-gray-200 bg-transparent p-2 text-gray-200 transition hover:border-blue-200 focus:bg-gray-200 focus:text-black"
+            className="basis-full rounded-md border-2 border-gray-200 bg-transparent p-2 text-gray-200 transition hover:border-blue-200 focus:bg-gray-200 focus:text-black focus:outline-none"
             placeholder="Subject: short description of the change"
           />
         </div>
@@ -98,10 +113,21 @@ function App() {
           <input
             {...register("ticket-numbers")}
             type="text"
-            className="basis-full rounded-md border-2 border-gray-200 bg-transparent p-2 text-gray-200 transition hover:border-blue-200 focus:bg-gray-200 focus:text-black"
+            className={`basis-full rounded-md border-2 bg-transparent p-2 text-gray-200 transition hover:border-blue-200 focus:bg-gray-200 focus:text-black focus:outline-none ${
+              errors.ticketNumberError ? "border-red-300" : "border-gray-200"
+            }`}
             placeholder="Ticket Number (optional): ABC-123, XYZ-789"
             onKeyUp={(e) => handleKeyUp(e)}
           />
+          {errors.ticketNumberError && (
+            <p
+              className={`${
+                tickets.length ? "-mt-3" : ""
+              } text-sm text-red-300`}
+            >
+              Ticket Number length must be less than 20 characters.
+            </p>
+          )}
           <ul className="flex flex-wrap gap-1">
             {tickets.map(({ id, title }) => (
               <li key={id} className="flex gap-2">
@@ -126,7 +152,7 @@ function App() {
             {...register("body")}
             name="body"
             id="body"
-            className="basis-full resize-none rounded-md border-2 border-gray-200 bg-transparent p-2 text-gray-200 transition hover:border-blue-200 focus:bg-gray-200 focus:text-black"
+            className="basis-full resize-none rounded-md border-2 border-gray-200 bg-transparent p-2 text-gray-200 transition hover:border-blue-200 focus:bg-gray-200 focus:text-black focus:outline-none"
             placeholder="Body (optional): longer description of the change"
           ></textarea>
         </div>
@@ -139,7 +165,7 @@ function App() {
             {...register("footer")}
             name="footer"
             id="footer"
-            className="basis-full resize-none rounded-md border-2 border-gray-200 bg-transparent p-2 text-gray-200 transition hover:border-blue-200 focus:bg-gray-200 focus:text-black"
+            className="basis-full resize-none rounded-md border-2 border-gray-200 bg-transparent p-2 text-gray-200 transition hover:border-blue-200 focus:bg-gray-200 focus:text-black focus:outline-none"
             placeholder="Footer (optional): breaking changes, closed issues, etc."
           ></textarea>
         </div>
@@ -163,7 +189,7 @@ function App() {
                 {watch("footer") && <p>{watch("footer")}</p>}
               </div>
               <button
-                className="inline-flex max-w-fit gap-2 rounded-lg border-2 border-blue-200 p-2 text-blue-200 transition hover:border-green-200 hover:text-green-200"
+                className="inline-flex max-w-fit gap-2 rounded-lg border-2 border-blue-200 p-2 text-blue-200 transition hover:border-green-200 hover:text-green-200 focus:outline-none"
                 onClick={copyToClipboard}
               >
                 <p>Copy to Clipboard</p>
