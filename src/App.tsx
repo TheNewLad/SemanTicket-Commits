@@ -2,6 +2,7 @@ import { useTickets } from "./utils/hooks/useTickets.tsx";
 import { useForm } from "react-hook-form";
 import {
   ClipboardDocumentCheckIcon,
+  PlusIcon,
   XCircleIcon,
 } from "@heroicons/react/24/outline";
 import { ErrorMessage } from "./components/ErrorMessage.tsx";
@@ -112,15 +113,23 @@ function App() {
           <label htmlFor="ticket-numbers" className="sr-only">
             Ticket Numbers
           </label>
-          <input
-            {...register("ticket-numbers")}
-            type="text"
-            className={`basis-full rounded-md border-2 bg-transparent p-2 text-gray-200 transition hover:border-blue-200 focus:bg-gray-200 focus:text-black focus:outline-none ${
-              errors.ticketNumberError ? "border-red-300" : "border-gray-200"
-            }`}
-            placeholder="Ticket Number (optional): ABC-123, XYZ-789"
-            onKeyUp={(e) => handleKeyUp(e)}
-          />
+          <div className="relative flex">
+            <input
+              {...register("ticket-numbers")}
+              type="text"
+              className={`basis-full rounded-md border-2 bg-transparent p-2 text-gray-200 transition hover:border-blue-200 focus:bg-gray-200 focus:text-black focus:outline-none ${
+                errors.ticketNumberError ? "border-red-300" : "border-gray-200"
+              }`}
+              placeholder="Ticket Number (optional): ABC-123, XYZ-789"
+              onKeyUp={(e) => handleKeyUp(e)}
+            />
+            <button
+              className="absolute right-0 rounded-r-md border-2 bg-[#242424] p-2"
+              onClick={() => processTickets(watch("ticket-numbers"))}
+            >
+              <PlusIcon className="h-6 w-6 text-white" />
+            </button>
+          </div>
           {errors.ticketNumberError && (
             <p
               className={`${
