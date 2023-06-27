@@ -122,6 +122,7 @@ function App() {
               }`}
               placeholder="Ticket Number (optional): ABC-123, XYZ-789"
               onKeyUp={(e) => handleKeyUp(e)}
+              onChange={() => clearErrors("ticketNumberError")}
             />
             <button
               className="absolute right-0 rounded-r-md border-2 bg-[#242424] p-2"
